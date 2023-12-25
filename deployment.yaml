@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bensalem_iheb_deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bensalem_iheb
+  template:
+    metadata:
+      labels:
+        app: bensalem_iheb
+    spec:
+      containers:
+        - name: bensalem_iheb-container
+          image: bensalem0iheb/bensalem_iheb:latest
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bensalem_iheb-service
+spec:
+  selector:
+    app: bensalem_iheb
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
